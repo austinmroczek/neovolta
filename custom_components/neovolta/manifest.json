@@ -1,12 +1,12 @@
 {
-  "domain": "integration_blueprint",
-  "name": "Integration blueprint",
+  "domain": "neovolta",
+  "name": "NeoVolta",
   "codeowners": [
-    "@ludeeus"
+    "@austinmroczek"
   ],
   "config_flow": true,
-  "documentation": "https://github.com/ludeeus/integration_blueprint",
-  "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/ludeeus/integration_blueprint/issues",
-  "version": "0.0.0"
+  "documentation": "https://github.com/austinmroczek/neovolta",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/austinmroczek/neovolta/issues",
+  "version": "0.0.1"
 }
