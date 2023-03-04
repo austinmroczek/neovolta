@@ -2,9 +2,8 @@
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, Platform
+from homeassistant.const import CONF_HOST, CONF_PORT, Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import NeovoltaApiClient
 from .const import DOMAIN
@@ -12,8 +11,6 @@ from .coordinator import NeovoltaDataUpdateCoordinatoror
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
-    Platform.BINARY_SENSOR,
-    Platform.SWITCH,
 ]
 
 
@@ -24,9 +21,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN][entry.entry_id] = coordinator = NeovoltaDataUpdateCoordinatoror(
         hass=hass,
         client=NeovoltaApiClient(
-            username=entry.data[CONF_USERNAME],
-            password=entry.data[CONF_PASSWORD],
-            session=async_get_clientsession(hass),
+            host=entry.data[CONF_HOST],
+            port=entry.data[CONF_PORT],
         ),
     )
     # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities

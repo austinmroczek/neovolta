@@ -1,7 +1,12 @@
 """Sensor platform for neovolta."""
 from __future__ import annotations
 
-from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
+from homeassistant.components.sensor import (
+    SensorEntity,
+    SensorEntityDescription,
+    SensorDeviceClass,
+    SensorStateClass,
+)
 
 from .const import DOMAIN
 from .coordinator import NeovoltaDataUpdateCoordinatoror
@@ -9,9 +14,38 @@ from .entity import NeovoltaEntity
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
-        key="neovolta",
-        name="Integration Sensor",
-        icon="mdi:format-quote-close",
+        key="battery_total",
+        name="Battery Total",
+        device_class=SensorDeviceClass.BATTERY,
+        native_unit_of_measurement="%",
+    ),
+    SensorEntityDescription(
+        key="battery_charged_today",
+        name="Battery Charged Today",
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement="kWh",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    SensorEntityDescription(
+        key="battery_discharged_today",
+        name="Battery Discharged Today",
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement="kWh",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    SensorEntityDescription(
+        key="battery_charged_cummulative",
+        name="Battery Charged Cummulative",
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement="kWh",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    SensorEntityDescription(
+        key="battery_discharged_cummulative",
+        name="Battery Discharged Cummulative",
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement="kWh",
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
 )
 
@@ -38,8 +72,11 @@ class NeovoltaSensor(NeovoltaEntity, SensorEntity):
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = entity_description
+        self._attr_unique_id = (
+            f"{self.coordinator.client.data['serial_number']}_{entity_description.key}"
+        )
 
     @property
     def native_value(self) -> str:
         """Return the native value of the sensor."""
-        return self.coordinator.data.get("body")
+        return self.coordinator.client.data.get(self.entity_description.key)

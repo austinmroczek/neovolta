@@ -1,11 +1,11 @@
-"""Sample API Client."""
+"""NeoVolta API Client."""
 from __future__ import annotations
 
 import asyncio
-import socket
-
-import aiohttp
 import async_timeout
+
+from pymodbus.client import AsyncModbusTcpClient
+from pymodbus.exceptions import ConnectionException
 
 
 class NeovoltaApiClientError(Exception):
@@ -21,65 +21,78 @@ class NeovoltaApiClientAuthenticationError(NeovoltaApiClientError):
 
 
 class NeovoltaApiClient:
-    """Sample API Client."""
+    """Neovolta API Client."""
 
     def __init__(
         self,
-        username: str,
-        password: str,
-        session: aiohttp.ClientSession,
+        host: str = "0.0.0.0",
+        port: str = "8899",
     ) -> None:
-        """Sample API Client."""
-        self._username = username
-        self._password = password
-        self._session = session
+        """Initialize."""
+        self._host = host
+        self._port = port
+        self._static_data_loaded = False
+        self.data = {}
+
+        self._client = AsyncModbusTcpClient(host=self._host, port=self._port)
+
+    async def _async_get_static_data(self) -> any:
+        """Get static data only once."""
+        # serial number
+        serial_number = ""
+        response = await self._get_value(3, 5)
+        for bits in response:
+            serial_number += chr(bits >> 8) + chr(bits & 0xFF)
+        self.data["serial_number"] = serial_number
+
+        self._static_data_loaded = True
 
     async def async_get_data(self) -> any:
         """Get data from the API."""
-        return await self._api_wrapper(
-            method="get", url="https://jsonplaceholder.typicode.com/posts/1"
-        )
+        if not self._static_data_loaded:
+            await self._async_get_static_data()
 
-    async def async_set_title(self, value: str) -> any:
-        """Get data from the API."""
-        return await self._api_wrapper(
-            method="patch",
-            url="https://jsonplaceholder.typicode.com/posts/1",
-            data={"title": value},
-            headers={"Content-type": "application/json; charset=UTF-8"},
-        )
+        # battery total %
+        response = await self._get_value(184, 1)
+        self.data["battery_total"] = response[0]
 
-    async def _api_wrapper(
+        # battery enegery today
+        response = await self._get_value(70, 2)
+        self.data["battery_charged_today"] = float(response[0]) * 0.1
+        self.data["battery_discharged_today"] = float(response[1]) * 0.1
+
+        # battery enegery cummulative
+        response = await self._get_value(72, 3)
+        self.data["battery_charged_cummulative"] = float(response[0]) * 0.1
+        self.data["battery_discharged_cummulative"] = float(response[2]) * 0.1
+
+    async def _get_value(
         self,
-        method: str,
-        url: str,
-        data: dict | None = None,
-        headers: dict | None = None,
+        address: int,
+        size: int,
+        unit: int = 1,
     ) -> any:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
-                response = await self._session.request(
-                    method=method,
-                    url=url,
-                    headers=headers,
-                    json=data,
+                if not self._client.connected:
+                    await self._client.connect()
+
+                response = await self._client.read_holding_registers(
+                    address=address, count=size, slave=unit
                 )
-                if response.status in (401, 403):
-                    raise NeovoltaApiClientAuthenticationError(
-                        "Invalid credentials",
-                    )
-                response.raise_for_status()
-                return await response.json()
+
+                if response.isError():
+                    return await self._get_value(address, size, unit)
+
+                return response.registers
 
         except asyncio.TimeoutError as exception:
             raise NeovoltaApiClientCommunicationError(
                 "Timeout error fetching information",
             ) from exception
-        except (aiohttp.ClientError, socket.gaierror) as exception:
-            raise NeovoltaApiClientCommunicationError(
-                "Error fetching information",
-            ) from exception
+        except ConnectionException:
+            return await self._get_value(address, size, unit)
         except Exception as exception:  # pylint: disable=broad-except
             raise NeovoltaApiClientError(
                 "Something really wrong happened!"
