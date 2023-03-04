@@ -54,12 +54,15 @@ class NeovoltaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     vol.Required(
                         CONF_HOST,
                         default=(user_input or {}).get(CONF_HOST),
+                        description="Neovolta IP Address",
                     ): selector.TextSelector(
                         selector.TextSelectorConfig(
                             type=selector.TextSelectorType.TEXT
                         ),
                     ),
-                    vol.Required(CONF_PORT, default="8899"): selector.TextSelector(
+                    vol.Required(
+                        CONF_PORT, default="8899", description="Neovolta Port"
+                    ): selector.TextSelector(
                         selector.TextSelectorConfig(
                             type=selector.TextSelectorType.TEXT
                         ),
