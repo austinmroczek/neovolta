@@ -20,6 +20,12 @@ ENTITY_DESCRIPTIONS = (
         native_unit_of_measurement="%",
     ),
     SensorEntityDescription(
+        key="battery_tbd",
+        name="Battery TBD",
+        device_class=SensorDeviceClass.BATTERY,
+        native_unit_of_measurement="%",
+    ),
+    SensorEntityDescription(
         key="battery_charged_today",
         name="Battery Charged Today",
         device_class=SensorDeviceClass.ENERGY,
@@ -29,6 +35,20 @@ ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="battery_discharged_today",
         name="Battery Discharged Today",
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement="kWh",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    SensorEntityDescription(
+        key="energy_from_grid_today",
+        name="Energy From Grid Today",
+        device_class=SensorDeviceClass.ENERGY,
+        native_unit_of_measurement="kWh",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+    ),
+    SensorEntityDescription(
+        key="energy_to_grid_today",
+        name="Energy To Grid Today",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement="kWh",
         state_class=SensorStateClass.TOTAL_INCREASING,
