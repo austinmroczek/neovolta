@@ -6,18 +6,36 @@
 
 [![hacs][hacsbadge]][hacs]
 ![Project Maintenance][maintenance-shield]
-[![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
-_Integration to integrate with [NeoVolta][NeoVolta]._
+_Integration to integrate [NeoVolta](https://www.neovolta.com) solar home batteries with [Home Assistant](https://www.home-assistant.io)._
 
-**This integration will set up the following platforms.**
+## This is a work in progress
+**You are likely to encounter errors and missing functionality.**
 
-Platform | Description
--- | --
-`sensor` | Show info from blueprint API.
+So far this integration has only been tested on one battery in one configuration.
+
+Battery | Network | Tested
+-- | -- | --
+NV14 | Wired | Yes
+NV14 | Wifi | No
+NV24 | Wired | No
+NV24 | Wifi | No
+
+Please report [issues](https://github.com/austinmroczek/neovolta/issues).
+
+## Platforms
+
+This integration will set up the following platforms. While many of the measurements are clearly of a particular type (voltage, frequency, etc) we do not have a full mapping to specific items shown in the Solarman app, so some items are named "TBD" or "Voltage1" until we know what they are.
+
+Platform | Type | Description
+-- | -- | --
+`sensor` | Battery | Current percentage of overall battery, or battery pack that is available.
+`sensor` | Total Energy | Various measurements of total energy in kiloWatt hours.
+`sensor` | Frequency | Frequency in Hertz
+`sensor` | Voltage | Current voltage of various components.
 
 ## Installation
 
@@ -50,6 +68,6 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/austinmroczek/neovolta.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40austinmroczek-blue.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-Austin%20Mroczek%20%40austinmroczek-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/austinmroczek/neovolta.svg?style=for-the-badge
 [releases]: https://github.com/austinmroczek/neovolta/releases
