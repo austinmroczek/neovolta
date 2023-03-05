@@ -1,4 +1,4 @@
-"""Constants for integration_blueprint."""
+"""Constants for neovolta."""
 from logging import Logger, getLogger
 
 LOGGER: Logger = getLogger(__package__)
