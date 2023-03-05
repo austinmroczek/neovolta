@@ -8,5 +8,5 @@
   "documentation": "https://github.com/austinmroczek/neovolta",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/austinmroczek/neovolta/issues",
-  "version": "0.0.1"
+  "version": "2023.3.0"
 }

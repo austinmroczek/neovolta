@@ -6,3 +6,7 @@ Config flow
 
 Initialize
 - IP doesn't work for some reason
+
+
+Other
+- Define a "device"
