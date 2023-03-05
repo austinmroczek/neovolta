@@ -83,6 +83,11 @@ class NeovoltaApiClient:
         # 85: energy consumed cummulative
         self.data["energy_consumed_cummulative"] = self._scaled_value(response[4], 0.1)
 
+        response = await self._get_value(109, 3)
+        # 109/111: PV voltage
+        self.data["pv_voltage1"] = self._scaled_value(response[0], 0.1)
+        self.data["pv_voltage2"] = self._scaled_value(response[2], 0.1)
+
         response = await self._get_value(126, 1)
         # 126: battery voltage
         self.data["battery_voltage1"] = self._scaled_value(response[0], 0.01)

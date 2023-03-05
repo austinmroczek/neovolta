@@ -137,6 +137,20 @@ ENTITY_DESCRIPTIONS = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
+        key="pv_voltage1",
+        name="PV Voltage1",
+        device_class=SensorDeviceClass.VOLTAGE,
+        native_unit_of_measurement="V",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="pv_voltage2",
+        name="PV Voltage2",
+        device_class=SensorDeviceClass.VOLTAGE,
+        native_unit_of_measurement="V",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
         key="grid_voltage_rsuvab",
         name="Grid Voltage RS/UV/AB",
         device_class=SensorDeviceClass.VOLTAGE,
