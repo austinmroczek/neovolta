@@ -1,0 +1,8 @@
+Config flow
+- lots of testing
+- check valid IP address
+- check IP address actually works
+- duplicate config_entries
+
+Initialize
+- IP doesn't work for some reason
