@@ -74,7 +74,7 @@ ENTITY_DESCRIPTIONS = (
         name="Battery Voltage TBD1",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement="V",
-        native_precision=2,
+        suggested_display_precision=2,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
@@ -82,7 +82,7 @@ ENTITY_DESCRIPTIONS = (
         name="Battery Voltage TBD2",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement="V",
-        native_precision=2,
+        suggested_display_precision=2,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
@@ -90,7 +90,7 @@ ENTITY_DESCRIPTIONS = (
         name="Battery Voltage TBD3",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement="V",
-        native_precision=2,
+        suggested_display_precision=2,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
@@ -98,7 +98,7 @@ ENTITY_DESCRIPTIONS = (
         name="Battery Voltage TBD4",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement="V",
-        native_precision=2,
+        suggested_display_precision=2,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
