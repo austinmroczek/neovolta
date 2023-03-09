@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 import asyncio
-import async_timeout
 import logging
 
+import async_timeout
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException
 
@@ -39,7 +39,7 @@ class NeovoltaApiClient:
 
         self._client = AsyncModbusTcpClient(host=self._host, port=self._port)
 
-    async def _async_get_static_data(self) -> any:
+    async def async_get_static_data(self) -> any:
         """Get static data only once."""
         # serial number
         serial_number = ""
@@ -57,7 +57,7 @@ class NeovoltaApiClient:
     async def async_get_data(self) -> any:
         """Get data from the API."""
         if not self._static_data_loaded:
-            await self._async_get_static_data()
+            await self.async_get_static_data()
 
         _LOGGER.debug("Neovolta starting async_get_data")
 

@@ -4,15 +4,16 @@
             "user": {
                 "description": "If you need help with the configuration have a look here: https://github.com/austinmroczek/neovolta",
                 "data": {
-                    "username": "Username",
-                    "password": "Password"
+                    "host": "Neovolta IP Address",
+                    "port": "Neovolta Port"
                 }
             }
         },
         "error": {
             "auth": "Username/Password is wrong.",
             "connection": "Unable to connect to the server.",
-            "unknown": "Unknown error occurred."
+            "unknown": "Unknown error occurred.",
+            "address": "Invalid IP address."
         }
     }
 }

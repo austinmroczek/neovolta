@@ -1,6 +1,9 @@
 """Adds config flow for Neovolta."""
 from __future__ import annotations
 
+import ipaddress
+from typing import Any
+
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_PORT
@@ -19,6 +22,10 @@ class NeovoltaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Neovolta."""
 
     VERSION = 1
+
+    def __init__(self):
+        """Initialize."""
+        self._client = None
 
     async def async_step_user(
         self,
@@ -41,6 +48,9 @@ class NeovoltaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             except NeovoltaApiClientError as exception:
                 LOGGER.exception(exception)
                 _errors["base"] = "unknown"
+            except vol.Invalid as exception:
+                LOGGER.exception(exception)
+                _errors["base"] = "address"
             else:
                 return self.async_create_entry(
                     title=self._client.data["serial_number"],
@@ -61,10 +71,12 @@ class NeovoltaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                         ),
                     ),
                     vol.Required(
-                        CONF_PORT, default="8899", description="Neovolta Port"
+                        CONF_PORT,
+                        default=(user_input or {}).get(CONF_PORT, "8899"),
+                        description="Neovolta Port",
                     ): selector.TextSelector(
                         selector.TextSelectorConfig(
-                            type=selector.TextSelectorType.TEXT
+                            type=selector.TextSelectorType.NUMBER
                         ),
                     ),
                 }
@@ -74,8 +86,20 @@ class NeovoltaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def _test_credentials(self, host: str, port: str) -> None:
         """Validate credentials."""
+        self._ip_v4_validator(host)
+
         self._client = NeovoltaApiClient(
             host=host,
             port=port,
         )
-        await self._client.async_get_data()
+        await self._client.async_get_static_data()
+
+    def _ip_v4_validator(self, value: Any) -> str:
+        """Validate that value is parsable as IPv4 address."""
+        try:
+            address = ipaddress.IPv4Address(value)
+        except ipaddress.AddressValueError as ex:
+            raise vol.Invalid(
+                f"value '{value}' is not a valid IPv4 address: {ex}"
+            ) from ex
+        return str(address)
