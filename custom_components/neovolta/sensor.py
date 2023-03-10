@@ -1,6 +1,6 @@
 """Sensor platform for neovolta."""
 from __future__ import annotations
-
+from dataclasses import dataclass
 from homeassistant.components.sensor import (
     SensorEntity,
     SensorEntityDescription,
@@ -12,172 +12,104 @@ from .const import DOMAIN
 from .coordinator import NeovoltaDataUpdateCoordinatoror
 from .entity import NeovoltaEntity
 
+
+class NeovoltaBatteryDescription(SensorEntityDescription):
+    """Battery description."""
+
+    def __init__(self, key, name):
+        """Initialize."""
+        super().__init__(key=key, name=name)
+        self.device_class = SensorDeviceClass.BATTERY
+        self.native_unit_of_measurement = "%"
+        self.state_class = SensorStateClass.MEASUREMENT
+
+
+class NeovoltaEnergyDescription(SensorEntityDescription):
+    """Energy description."""
+
+    def __init__(self, key, name):
+        """Initialize."""
+        super().__init__(key=key, name=name)
+        self.device_class = SensorDeviceClass.ENERGY
+        self.native_unit_of_measurement = "kWh"
+        self.state_class = SensorStateClass.TOTAL_INCREASING
+
+
+class NeovoltaVoltageDescription(SensorEntityDescription):
+    """Voltage description."""
+
+    def __init__(self, key, name):
+        """Initialize."""
+        super().__init__(key=key, name=name)
+        self.device_class = SensorDeviceClass.VOLTAGE
+        self.native_unit_of_measurement = "V"
+        self.suggested_display_precision = 2
+        self.state_class = SensorStateClass.MEASUREMENT
+
+
+class NeovoltaFrequencyDescription(SensorEntityDescription):
+    """Frequency description."""
+
+    def __init__(self, key, name):
+        """Initialize."""
+        super().__init__(key=key, name=name)
+        self.device_class = (SensorDeviceClass.FREQUENCY,)
+        self.native_unit_of_measurement = ("Hz",)
+        self.state_class = (SensorStateClass.MEASUREMENT,)
+
+
 ENTITY_DESCRIPTIONS = (
-    SensorEntityDescription(
-        key="battery_total",
-        name="Battery Total",
-        device_class=SensorDeviceClass.BATTERY,
-        native_unit_of_measurement="%",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="battery_tbd",
-        name="Battery TBD",
-        device_class=SensorDeviceClass.BATTERY,
-        native_unit_of_measurement="%",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
+    NeovoltaBatteryDescription(key="battery_total", name="Battery Total"),
+    NeovoltaBatteryDescription(key="battery_tbd", name="Battery TBD"),
+    NeovoltaEnergyDescription(
         key="battery_charged_today",
         name="Battery Charged Today",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
+    NeovoltaEnergyDescription(
         key="battery_discharged_today",
         name="Battery Discharged Today",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
+    NeovoltaEnergyDescription(
         key="energy_from_grid_today",
         name="Energy From Grid Today",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
+    NeovoltaEnergyDescription(
         key="energy_to_grid_today",
         name="Energy To Grid Today",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
+    NeovoltaEnergyDescription(
         key="battery_charged_cummulative",
         name="Battery Charged Cummulative",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
+    NeovoltaEnergyDescription(
         key="battery_discharged_cummulative",
         name="Battery Discharged Cummulative",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
-        key="battery_voltage1",
-        name="Battery Voltage TBD1",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        suggested_display_precision=2,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="battery_voltage2",
-        name="Battery Voltage TBD2",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        suggested_display_precision=2,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="battery_voltage3",
-        name="Battery Voltage TBD3",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        suggested_display_precision=2,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="battery_voltage4",
-        name="Battery Voltage TBD4",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        suggested_display_precision=2,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
+    NeovoltaVoltageDescription(key="battery_voltage1", name="Battery Voltage TBD1"),
+    NeovoltaVoltageDescription(key="battery_voltage2", name="Battery Voltage TBD2"),
+    NeovoltaVoltageDescription(key="battery_voltage3", name="Battery Voltage TBD3"),
+    NeovoltaVoltageDescription(key="battery_voltage4", name="Battery Voltage TBD4"),
+    NeovoltaEnergyDescription(
         key="energy_to_grid_cummulative",
         name="Energy to Grid Cummulative",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
+    NeovoltaEnergyDescription(
         key="energy_consumed_today",
         name="Energy Consumed Today",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
+    NeovoltaEnergyDescription(
         key="energy_consumed_cummulative",
         name="Energy Consumed Cummulative",
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement="kWh",
-        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
-    SensorEntityDescription(
-        key="grid_voltage_rua",
-        name="Grid Voltage R/U/A",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="grid_voltage_svb",
-        name="Grid Voltage S/V/B",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="pv_voltage1",
-        name="PV Voltage1",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="pv_voltage2",
-        name="PV Voltage2",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="grid_voltage_rsuvab",
-        name="Grid Voltage RS/UV/AB",
-        device_class=SensorDeviceClass.VOLTAGE,
-        native_unit_of_measurement="V",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="frequency1",
-        name="Frequency1",
-        device_class=SensorDeviceClass.FREQUENCY,
-        native_unit_of_measurement="Hz",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="frequency2",
-        name="Frequency2",
-        device_class=SensorDeviceClass.FREQUENCY,
-        native_unit_of_measurement="Hz",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="frequency3",
-        name="Frequency3",
-        device_class=SensorDeviceClass.FREQUENCY,
-        native_unit_of_measurement="Hz",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
+    NeovoltaVoltageDescription(key="grid_voltage_rua", name="Grid Voltage R/U/A"),
+    NeovoltaVoltageDescription(key="grid_voltage_svb", name="Grid Voltage S/V/B"),
+    NeovoltaVoltageDescription(key="pv_voltage1", name="PV Voltage1"),
+    NeovoltaVoltageDescription(key="pv_voltage2", name="PV Voltage2"),
+    NeovoltaVoltageDescription(key="grid_voltage_rsuvab", name="Grid Voltage RS/UV/AB"),
+    NeovoltaFrequencyDescription(key="frequency1", name="Frequency1"),
+    NeovoltaFrequencyDescription(key="frequency2", name="Frequency2"),
+    NeovoltaFrequencyDescription(key="frequency3", name="Frequency3"),
+    NeovoltaFrequencyDescription(key="frequency4", name="Frequency4"),
 )
 
 

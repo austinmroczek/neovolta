@@ -61,66 +61,40 @@ class NeovoltaApiClient:
 
         _LOGGER.debug("Neovolta starting async_get_data")
 
-        # battery enegery today
-        response = await self._get_value(70, 10)
-        self.data["battery_charged_today"] = self._scaled_value(response[0], 0.1)
-        self.data["battery_discharged_today"] = self._scaled_value(response[1], 0.1)
-        self.data["battery_charged_cummulative"] = self._scaled_value(response[2], 0.1)
-        # unusre if response[3] is anything useful
+        # grab register 0 to 99
+        response = await self._get_value(0, 100)
+        self.data["battery_charged_today"] = self._scaled_value(response[70], 0.1)
+        self.data["battery_discharged_today"] = self._scaled_value(response[71], 0.1)
+        self.data["battery_charged_cummulative"] = self._scaled_value(response[72], 0.1)
         self.data["battery_discharged_cummulative"] = self._scaled_value(
-            response[4], 0.1
+            response[74], 0.1
         )
-        self.data["energy_from_grid_today"] = self._scaled_value(response[6], 0.1)
-        self.data["energy_to_grid_today"] = self._scaled_value(response[7], 0.1)
-        # 79: frequency TBD1
-        self.data["frequency1"] = self._scaled_value(response[9], 0.01)
+        self.data["energy_from_grid_today"] = self._scaled_value(response[76], 0.1)
+        self.data["energy_to_grid_today"] = self._scaled_value(response[77], 0.1)
+        self.data["frequency1"] = self._scaled_value(response[79], 0.01)
+        self.data["energy_to_grid_cummulative"] = self._scaled_value(response[81], 0.1)
+        self.data["energy_consumed_today"] = self._scaled_value(response[84], 0.1)
+        self.data["energy_consumed_cummulative"] = self._scaled_value(response[85], 0.1)
 
-        response = await self._get_value(81, 5)
-        # 81: energy to grid cummulative
-        self.data["energy_to_grid_cummulative"] = self._scaled_value(response[0], 0.1)
-        # 84: energy consumed today
-        self.data["energy_consumed_today"] = self._scaled_value(response[3], 0.1)
-        # 85: energy consumed cummulative
-        self.data["energy_consumed_cummulative"] = self._scaled_value(response[4], 0.1)
+        # grab register 100 to 199
+        response = await self._get_value(100, 100)
+        self.data["pv_voltage1"] = self._scaled_value(response[9], 0.1)
+        self.data["pv_voltage2"] = self._scaled_value(response[11], 0.1)
+        self.data["battery_voltage1"] = self._scaled_value(response[26], 0.01)
+        self.data["grid_voltage_rua"] = self._scaled_value(response[38], 0.1)
+        self.data["grid_voltage_svb"] = self._scaled_value(response[39], 0.1)
+        self.data["grid_voltage_rsuvab"] = self._scaled_value(response[40], 0.1)
+        self.data["battery_voltage2"] = self._scaled_value(response[43], 0.01)
+        self.data["battery_voltage3"] = self._scaled_value(response[83], 0.01)
+        self.data["battery_total"] = self._scaled_value(response[84], 1)
+        self.data["frequency2"] = self._scaled_value(response[92], 0.01)
+        self.data["frequency3"] = self._scaled_value(response[93], 0.01)
 
-        response = await self._get_value(109, 3)
-        # 109/111: PV voltage
-        self.data["pv_voltage1"] = self._scaled_value(response[0], 0.1)
-        self.data["pv_voltage2"] = self._scaled_value(response[2], 0.1)
-
-        response = await self._get_value(126, 1)
-        # 126: battery voltage
-        self.data["battery_voltage1"] = self._scaled_value(response[0], 0.01)
-
-        response = await self._get_value(138, 3)
-        # 138: grid voltage R/U/A
-        self.data["grid_voltage_rua"] = self._scaled_value(response[0], 0.1)
-        # 139: grid voltage S/V/B
-        self.data["grid_voltage_svb"] = self._scaled_value(response[1], 0.1)
-        # 140: grid voltage RS/UV/AB
-        self.data["grid_voltage_rsuvab"] = self._scaled_value(response[2], 0.1)
-
-        response = await self._get_value(143, 1)
-        # 143: battery voltage
-        self.data["battery_voltage2"] = self._scaled_value(response[0], 0.01)
-
-        response = await self._get_value(183, 2)
-        # 183: battery voltage
-        self.data["battery_voltage3"] = self._scaled_value(response[0], 0.01)
-        # 184: battery total %
-        self.data["battery_total"] = self._scaled_value(response[1], 1)
-
-        response = await self._get_value(192, 2)
-        # 192: frequency TBD
-        self.data["frequency2"] = self._scaled_value(response[0], 0.01)
-        # 193: frequency TBD
-        self.data["frequency3"] = self._scaled_value(response[1], 0.01)
-
-        response = await self._get_value(316, 2)
-        # 316: battery component TBD %
-        self.data["battery_tbd"] = self._scaled_value(response[0], 1)
-        # 317: battery voltage
-        self.data["battery_voltage4"] = self._scaled_value(response[1], 0.01)
+        # grab register 300 to 399
+        response = await self._get_value(300, 100)
+        self.data["battery_tbd"] = self._scaled_value(response[16], 1)
+        self.data["battery_voltage4"] = self._scaled_value(response[17], 0.01)
+        self.data["frequency4"] = self._scaled_value(response[44], 0.01)
 
         _LOGGER.debug("Neovolta finish async_get_data")
 
