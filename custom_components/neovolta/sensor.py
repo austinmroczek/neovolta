@@ -104,7 +104,7 @@ ENTITY_DESCRIPTIONS = (
     NeovoltaVoltageDescription(key="battery_voltage1", name="Battery Voltage TBD1"),
     NeovoltaVoltageDescription(key="battery_voltage2", name="Battery Voltage TBD2"),
     NeovoltaVoltageDescription(key="battery_voltage3", name="Battery Voltage TBD3"),
-    NeovoltaVoltageDescription(key="battery_voltage4", name="Battery Voltage TBD4"),
+    NeovoltaVoltageDescription(key="bms_voltage", name="BMS Voltage"),
     NeovoltaEnergyDescription(
         key="energy_to_grid_cumulative",
         name="Energy to Grid Cumulative",

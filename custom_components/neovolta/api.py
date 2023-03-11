@@ -130,7 +130,7 @@ class NeovoltaApiClient:
         self.data["current314"] = self._scaled_value(response[14], 0.1)
         self.data["current315"] = self._scaled_value(response[15], 0.1)
         self.data["battery_tbd"] = self._scaled_value(response[16], 1)
-        self.data["battery_voltage4"] = self._scaled_value(response[17], 0.01)
+        self.data["bms_voltage"] = self._scaled_value(response[17], 0.01)
         self.data["voltage319"] = self._scaled_value(response[19], 0.1)
         self.data["frequency4"] = self._scaled_value(response[44], 0.01)
 
