@@ -47,6 +47,18 @@ class NeovoltaVoltageDescription(SensorEntityDescription):
         self.state_class = SensorStateClass.MEASUREMENT
 
 
+class NeovoltaCurrentDescription(SensorEntityDescription):
+    """Current description."""
+
+    def __init__(self, key, name):
+        """Initialize."""
+        super().__init__(key=key, name=name)
+        self.device_class = SensorDeviceClass.CURRENT
+        self.native_unit_of_measurement = "A"
+        self.suggested_display_precision = 2
+        self.state_class = SensorStateClass.MEASUREMENT
+
+
 class NeovoltaFrequencyDescription(SensorEntityDescription):
     """Frequency description."""
 
@@ -110,6 +122,23 @@ ENTITY_DESCRIPTIONS = (
     NeovoltaFrequencyDescription(key="frequency2", name="Frequency2"),
     NeovoltaFrequencyDescription(key="frequency3", name="Frequency3"),
     NeovoltaFrequencyDescription(key="frequency4", name="Frequency4"),
+    NeovoltaVoltageDescription(key="voltage148", name="Voltage 148"),
+    NeovoltaVoltageDescription(key="voltage149", name="Voltage 149"),
+    NeovoltaVoltageDescription(key="voltage150", name="Voltage 150"),
+    NeovoltaVoltageDescription(key="voltage151", name="Voltage 151"),
+    NeovoltaVoltageDescription(key="voltage152", name="Voltage 152"),
+    NeovoltaVoltageDescription(key="voltage153", name="Voltage 153"),
+    NeovoltaVoltageDescription(key="voltage154", name="Voltage 154"),
+    NeovoltaVoltageDescription(key="voltage155", name="Voltage 155"),
+    NeovoltaVoltageDescription(key="voltage156", name="Voltage 156"),
+    NeovoltaVoltageDescription(key="voltage157", name="Voltage 157"),
+    NeovoltaVoltageDescription(key="voltage158", name="Voltage 158"),
+    NeovoltaVoltageDescription(key="voltage181", name="Voltage 181"),
+    NeovoltaVoltageDescription(key="voltage182", name="Voltage 182"),
+    NeovoltaVoltageDescription(key="voltage319", name="Voltage 319"),
+    NeovoltaCurrentDescription(key="current160", name="Current 160"),
+    NeovoltaCurrentDescription(key="current314", name="Current 314"),
+    NeovoltaCurrentDescription(key="current315", name="Current 315"),
 )
 
 

@@ -85,6 +85,22 @@ class NeovoltaApiClient:
         self.data["grid_voltage_svb"] = self._scaled_value(response[39], 0.1)
         self.data["grid_voltage_rsuvab"] = self._scaled_value(response[40], 0.1)
         self.data["battery_voltage2"] = self._scaled_value(response[43], 0.01)
+        self.data["voltage148"] = self._scaled_value(response[48], 0.1)
+        self.data["voltage149"] = self._scaled_value(response[49], 0.1)
+        self.data["voltage150"] = self._scaled_value(response[50], 0.1)
+        self.data["voltage151"] = self._scaled_value(response[51], 0.1)
+        self.data["voltage152"] = self._scaled_value(response[52], 0.1)
+        self.data["voltage153"] = self._scaled_value(response[53], 0.1)
+        self.data["voltage154"] = self._scaled_value(response[54], 0.1)
+        self.data["voltage155"] = self._scaled_value(response[55], 0.1)
+        self.data["voltage156"] = self._scaled_value(response[56], 0.1)
+        self.data["voltage157"] = self._scaled_value(response[57], 0.1)
+        self.data["voltage158"] = self._scaled_value(response[58], 0.1)
+        self.data["current160"] = self._scaled_value(response[60], 0.01)
+
+        self.data["voltage181"] = self._scaled_value(response[81], 0.1)
+        self.data["voltage182"] = self._scaled_value(response[82], 0.1)
+
         self.data["battery_voltage3"] = self._scaled_value(response[83], 0.01)
         self.data["battery_total"] = self._scaled_value(response[84], 1)
         self.data["frequency2"] = self._scaled_value(response[92], 0.01)
@@ -92,8 +108,11 @@ class NeovoltaApiClient:
 
         # grab register 300 to 399
         response = await self._get_value(300, 100)
+        self.data["current314"] = self._scaled_value(response[14], 0.1)
+        self.data["current315"] = self._scaled_value(response[15], 0.1)
         self.data["battery_tbd"] = self._scaled_value(response[16], 1)
         self.data["battery_voltage4"] = self._scaled_value(response[17], 0.01)
+        self.data["voltage319"] = self._scaled_value(response[19], 0.1)
         self.data["frequency4"] = self._scaled_value(response[44], 0.01)
 
         _LOGGER.debug("Neovolta finish async_get_data")
