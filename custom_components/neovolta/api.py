@@ -77,7 +77,7 @@ class NeovoltaApiClient:
 
         # grab register 100 to 199
         response = await self._get_value(100, 100)
-        self.data["energy108"] = self._scaled_value(response[8], 0.1)
+        self.data["daily_generation"] = self._scaled_value(response[8], 0.1)
         self.data["pv_voltage1"] = self._scaled_value(response[9], 0.1)
         self.data["pv_voltage2"] = self._scaled_value(response[11], 0.1)
         self.data["battery_voltage1"] = self._scaled_value(response[26], 0.01)

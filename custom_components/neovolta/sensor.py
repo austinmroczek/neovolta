@@ -76,7 +76,7 @@ ENTITY_DESCRIPTIONS = (
     NeovoltaEnergyDescription(
         key="energy_from_grid_cumulative", name="Energy From Grid Cumulative"
     ),
-    NeovoltaEnergyDescription(key="energy108", name="Energy 108"),
+    NeovoltaEnergyDescription(key="daily_generation", name="Daily Generation"),
     NeovoltaEnergyDescription(
         key="battery_charged_today",
         name="Battery Charged Today",
