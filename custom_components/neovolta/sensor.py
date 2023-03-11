@@ -146,6 +146,10 @@ ENTITY_DESCRIPTIONS = (
     NeovoltaCurrentDescription(key="meter_ac_current_b", name="Meter AC Current B"),
     NeovoltaCurrentDescription(key="current314", name="Current 314"),
     NeovoltaCurrentDescription(key="current315", name="Current 315"),
+    NeovoltaEnergyDescription(key="energy65", name="Energy 65"),
+    NeovoltaEnergyDescription(key="energy66", name="Energy 66"),
+    NeovoltaEnergyDescription(key="energy87", name="Energy 87"),
+    NeovoltaEnergyDescription(key="energy96", name="Energy 96"),
 )
 
 
