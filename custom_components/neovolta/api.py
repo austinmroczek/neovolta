@@ -63,17 +63,17 @@ class NeovoltaApiClient:
         response = await self._get_value(0, 100)
         self.data["battery_charged_today"] = self._scaled_value(response[70], 0.1)
         self.data["battery_discharged_today"] = self._scaled_value(response[71], 0.1)
-        self.data["battery_charged_cummulative"] = self._scaled_value(response[72], 0.1)
-        self.data["battery_discharged_cummulative"] = self._scaled_value(
+        self.data["battery_charged_cumulative"] = self._scaled_value(response[72], 0.1)
+        self.data["battery_discharged_cumulative"] = self._scaled_value(
             response[74], 0.1
         )
         self.data["energy_from_grid_today"] = self._scaled_value(response[76], 0.1)
         self.data["energy_to_grid_today"] = self._scaled_value(response[77], 0.1)
         self.data["energy_from_grid_cumulative"] = self._scaled_value(response[78], 0.1)
         self.data["frequency1"] = self._scaled_value(response[79], 0.01)
-        self.data["energy_to_grid_cummulative"] = self._scaled_value(response[81], 0.1)
+        self.data["energy_to_grid_cumulative"] = self._scaled_value(response[81], 0.1)
         self.data["energy_consumed_today"] = self._scaled_value(response[84], 0.1)
-        self.data["energy_consumed_cummulative"] = self._scaled_value(response[85], 0.1)
+        self.data["energy_consumed_cumulative"] = self._scaled_value(response[85], 0.1)
 
         # grab register 100 to 199
         response = await self._get_value(100, 100)
