@@ -97,7 +97,7 @@ class NeovoltaApiClient:
         self.data["voltage157"] = self._scaled_value(response[57], 0.1)
         self.data["voltage158"] = self._scaled_value(response[58], 0.1)
         self.data["current160"] = self._scaled_value(response[60], 0.01)
-        self.data["current162"] = self._scaled_value(response[62], 0.01)
+        self.data["meter_ac_current_a"] = self._scaled_value(response[62], 0.01)
         self.data["voltage181"] = self._scaled_value(response[81], 0.1)
         self.data["voltage182"] = self._scaled_value(response[82], 0.1)
 
