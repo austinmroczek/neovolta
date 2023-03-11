@@ -6,7 +6,7 @@ import logging
 
 import async_timeout
 from pymodbus.client import AsyncModbusTcpClient
-from pymodbus.exceptions import ConnectionException
+from pymodbus.exceptions import ConnectionException, ModbusIOException
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -155,6 +155,10 @@ class NeovoltaApiClient:
         except ConnectionException:
             _LOGGER.debug(f"Neovolta connectionException try # {tries}")
             return await self._get_value(address, size, unit, tries - 1)
+        except ModbusIOException as exception:
+            _LOGGER.debug(f"Neovolta ModbusIOException: {exception.message}")
+            # return await self._get_value(address, size, unit, tries - 1)
+
         except Exception as exception:  # pylint: disable=broad-except
             raise NeovoltaApiClientError(
                 "Something really wrong happened!"
