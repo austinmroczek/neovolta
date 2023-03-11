@@ -59,8 +59,6 @@ class NeovoltaApiClient:
         if not self._static_data_loaded:
             await self.async_get_static_data()
 
-        _LOGGER.debug("Neovolta starting async_get_data")
-
         # grab register 0 to 99
         response = await self._get_value(0, 100)
         self.data["battery_charged_today"] = self._scaled_value(response[70], 0.1)
@@ -71,7 +69,7 @@ class NeovoltaApiClient:
         )
         self.data["energy_from_grid_today"] = self._scaled_value(response[76], 0.1)
         self.data["energy_to_grid_today"] = self._scaled_value(response[77], 0.1)
-        self.data["energy78"] = self._scaled_value(response[78], 0.1)
+        self.data["energy_from_grid_cumulative"] = self._scaled_value(response[78], 0.1)
         self.data["frequency1"] = self._scaled_value(response[79], 0.01)
         self.data["energy_to_grid_cummulative"] = self._scaled_value(response[81], 0.1)
         self.data["energy_consumed_today"] = self._scaled_value(response[84], 0.1)
@@ -117,8 +115,6 @@ class NeovoltaApiClient:
         self.data["voltage319"] = self._scaled_value(response[19], 0.1)
         self.data["frequency4"] = self._scaled_value(response[44], 0.01)
 
-        _LOGGER.debug("Neovolta finish async_get_data")
-
     async def _get_value(
         self,
         address: int,
@@ -130,7 +126,6 @@ class NeovoltaApiClient:
         try:
             async with async_timeout.timeout(30):
                 if not self._client.connected:
-                    _LOGGER.debug("Neovolta client connecting")
                     await self._client.connect()
 
                 response = await self._client.read_holding_registers(

@@ -74,8 +74,8 @@ ENTITY_DESCRIPTIONS = (
     NeovoltaBatteryDescription(key="battery_total", name="Battery Total"),
     NeovoltaBatteryDescription(key="battery_tbd", name="Battery TBD"),
     NeovoltaEnergyDescription(
-        key="energy78", name="Energy 78"
-    ),  # cumm energy from grid ?
+        key="energy_from_grid_cumulative", name="Energy From Grid Cumulative"
+    ),
     NeovoltaEnergyDescription(key="energy108", name="Energy 108"),
     NeovoltaEnergyDescription(
         key="battery_charged_today",
