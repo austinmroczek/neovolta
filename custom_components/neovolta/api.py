@@ -74,7 +74,7 @@ class NeovoltaApiClient:
         self.data["energy_from_grid_today"] = self._scaled_value(response[76], 0.1)
         self.data["energy_to_grid_today"] = self._scaled_value(response[77], 0.1)
         self.data["energy_from_grid_cumulative"] = self._scaled_value(response[78], 0.1)
-        self.data["frequency1"] = self._scaled_value(response[79], 0.01)
+        self.data["grid_frequency"] = self._scaled_value(response[79], 0.01)
         self.data["energy_to_grid_cumulative"] = self._scaled_value(response[81], 0.1)
         self.data["energy_consumed_today"] = self._scaled_value(response[84], 0.1)
         self.data["energy_consumed_cumulative"] = self._scaled_value(response[85], 0.1)

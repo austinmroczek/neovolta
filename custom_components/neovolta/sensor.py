@@ -122,7 +122,7 @@ ENTITY_DESCRIPTIONS = (
     NeovoltaVoltageDescription(key="pv_voltage1", name="PV Voltage1"),
     NeovoltaVoltageDescription(key="pv_voltage2", name="PV Voltage2"),
     NeovoltaVoltageDescription(key="grid_voltage_rsuvab", name="Grid Voltage RS/UV/AB"),
-    NeovoltaFrequencyDescription(key="frequency1", name="Frequency1"),
+    NeovoltaFrequencyDescription(key="grid_frequency", name="Grid Frequency"),
     NeovoltaFrequencyDescription(key="frequency2", name="Frequency2"),
     NeovoltaFrequencyDescription(key="frequency3", name="Frequency3"),
     NeovoltaFrequencyDescription(key="frequency4", name="Frequency4"),
