@@ -87,6 +87,7 @@ class NeovoltaApiClient:
         self.data["pv_voltage1"] = self._scaled_value(response[9], 0.1)
         self.data["pv_voltage2"] = self._scaled_value(response[11], 0.1)
         self.data["battery_voltage1"] = self._scaled_value(response[26], 0.01)
+        self.data["energy131"] = self._scaled_value(response[31], 0.1)
         self.data["current132"] = self._scaled_value(response[32], 0.01)
         self.data["current133"] = self._scaled_value(response[33], 0.01)
         self.data["grid_voltage_rua"] = self._scaled_value(response[38], 0.1)

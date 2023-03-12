@@ -164,6 +164,7 @@ ENTITY_DESCRIPTIONS = (
     NeovoltaEnergyDescription(key="energy68", name="Energy 68"),
     NeovoltaEnergyDescription(key="energy87", name="Energy 87"),
     NeovoltaEnergyDescription(key="energy96", name="Energy 96"),
+    NeovoltaEnergyDescription(key="energy131", name="Energy 131"),
 )
 
 
