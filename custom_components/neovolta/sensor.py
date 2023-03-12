@@ -65,9 +65,10 @@ class NeovoltaFrequencyDescription(SensorEntityDescription):
     def __init__(self, key, name):
         """Initialize."""
         super().__init__(key=key, name=name)
-        self.device_class = (SensorDeviceClass.FREQUENCY,)
-        self.native_unit_of_measurement = ("Hz",)
-        self.state_class = (SensorStateClass.MEASUREMENT,)
+        self.device_class = SensorDeviceClass.FREQUENCY
+        self.native_unit_of_measurement = "Hz"
+        self.suggested_display_precision = 2
+        self.state_class = SensorStateClass.MEASUREMENT
 
 
 ENTITY_DESCRIPTIONS = (
