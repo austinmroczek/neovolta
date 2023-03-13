@@ -153,24 +153,28 @@ class NeovoltaApiClient:
                 )
 
                 if response.isError():
-                    _LOGGER.debug(f"response error: {response}")
-                    _LOGGER.debug(f"Neovolta try # {tries}")
+                    _LOGGER.debug(f"NeoVolta MODBUS response error: {response}")
+                    _LOGGER.debug(
+                        f"Neovolta re-trying address {address} ({tries} tries remain)"
+                    )
                     return await self._get_value(address, size, unit, tries - 1)
 
                 return response.registers
 
         except asyncio.TimeoutError as exception:
-            _LOGGER.debug(f"Neovolta timeout try # {tries} for addresss ({address})")
             if tries > 0:
+                _LOGGER.debug(
+                    f"Neovolta timeout for addresss {address}, re-trying ({tries} tries remain)"
+                )
                 return await self._get_value(address, size, unit, tries - 1)
             raise NeovoltaApiClientCommunicationError(
-                "Timeout error fetching information",
+                f"NeoVolta timeout error fetching information for address {address}",
             ) from exception
         except ConnectionException:
             _LOGGER.debug(f"Neovolta connectionException try # {tries}")
             return await self._get_value(address, size, unit, tries - 1)
         except ModbusIOException as exception:
-            _LOGGER.debug(f"Neovolta ModbusIOException: {exception.message}")
+            _LOGGER.error(f"Neovolta ModbusIOException: {exception.message}")
             # return await self._get_value(address, size, unit, tries - 1)
 
         except Exception as exception:  # pylint: disable=broad-except
