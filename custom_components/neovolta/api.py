@@ -56,6 +56,9 @@ class NeovoltaApiClient:
 
     async def async_get_data(self) -> any:
         """Get data from the API."""
+        if not self._client.connected:
+            await self._client.connect()
+
         if not self._static_data_loaded:
             await self.async_get_static_data()
 
@@ -135,6 +138,9 @@ class NeovoltaApiClient:
         self.data["voltage319"] = self._scaled_value(response[19], 0.1)
         self.data["frequency4"] = self._scaled_value(response[44], 0.01)
 
+        # close after finished getting data (it will auto-connect on next call)
+        await self._client.close()
+
     async def _get_value(
         self,
         address: int,
@@ -145,9 +151,6 @@ class NeovoltaApiClient:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(30):
-                if not self._client.connected:
-                    await self._client.connect()
-
                 response = await self._client.read_holding_registers(
                     address=address, count=size, slave=unit
                 )
