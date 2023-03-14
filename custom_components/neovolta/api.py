@@ -7,6 +7,7 @@ import logging
 import async_timeout
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException, ModbusIOException
+from pymodbus.pdu import ExceptionResponse
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -180,6 +181,10 @@ class NeovoltaApiClient:
 
         if response.isError():
             _LOGGER.debug(f"NeoVolta MODBUS response error: {response}")
+            return await self._get_value(address, size, unit, tries + 1)
+
+        if isinstance(response, ExceptionResponse):
+            _LOGGER.debug(f"NeoVolta device rejected MODBUS request: {response}")
             return await self._get_value(address, size, unit, tries + 1)
 
         return response.registers
