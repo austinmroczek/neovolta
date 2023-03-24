@@ -8,6 +8,10 @@ import async_timeout
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException, ModbusIOException
 from pymodbus.pdu import ExceptionResponse
+from pymodbus import pymodbus_apply_logging_config
+
+# logging.getLogger("pymodbus.logging").setLevel(logging.DEBUG)
+pymodbus_apply_logging_config()
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -37,8 +41,25 @@ class NeovoltaApiClient:
         self._port = port
         self._static_data_loaded = False
         self.data = {}
+        self._stats = {
+            "async_get_data": 0,
+            "get_value": 0,
+            "TimeoutError": 0,
+            "ConnectionException": 0,
+            "ModbusIOException": 0,
+            "Exception": 0,
+            "isError": 0,
+            "ExceptionResponse": 0,
+            "tries": {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0},
+        }
 
-        self._client = AsyncModbusTcpClient(host=self._host, port=self._port)
+        self._client = AsyncModbusTcpClient(
+            host=self._host,
+            port=self._port,
+            close_comm_on_error=True,
+            reconnect_delay=1000,
+            retry_on_empty=True,
+        )
 
     async def async_get_static_data(self) -> any:
         """Get static data only once."""
@@ -57,8 +78,7 @@ class NeovoltaApiClient:
 
     async def async_get_data(self) -> any:
         """Get data from the API."""
-        if not self._client.connected:
-            await self._client.connect()
+        self._stats["async_get_data"] += 1
 
         if not self._static_data_loaded:
             await self.async_get_static_data()
@@ -139,8 +159,7 @@ class NeovoltaApiClient:
         self.data["voltage319"] = self._scaled_value(response[19], 0.1)
         self.data["frequency4"] = self._scaled_value(response[44], 0.01)
 
-        # close after finished getting data (it will auto-connect on next call)
-        await self._client.close()
+        await self._calculate_stats()
 
     async def _get_value(
         self,
@@ -150,14 +169,18 @@ class NeovoltaApiClient:
         tries=1,
     ) -> any:
         """Get information from the API."""
+        self._stats["get_value"] += 1
+        self._stats["tries"][tries] += 1
         if tries >= 10:
+            await self._calculate_stats()
             raise NeovoltaApiClientCommunicationError(
                 f"Timeout fetching NeoVolta information",
             )
 
         if tries > 1:
             _LOGGER.debug(f"Neovolta re-try # {tries} for register {address}")
-            await asyncio.sleep(tries)
+            # await asyncio.sleep(tries)
+            await asyncio.sleep(5)
 
         try:
             async with async_timeout.timeout(30):
@@ -165,26 +188,58 @@ class NeovoltaApiClient:
                     address=address, count=size, slave=unit
                 )
 
-        except asyncio.TimeoutError:
-            _LOGGER.debug("Neovolta timeout")
+        except asyncio.TimeoutError as exception:
+            _LOGGER.debug(f"Neovolta timeout: {exception}")
+            self._stats["TimeoutError"] += 1
             return await self._get_value(address, size, unit, tries + 1)
-        except ConnectionException:
-            _LOGGER.debug("Neovolta connection problem")
+        except ConnectionException as exception:
+            _LOGGER.debug(f"Neovolta connection problem: {exception}")
+            self._stats["ConnectionException"] += 1
             return await self._get_value(address, size, unit, tries + 1)
         except ModbusIOException as exception:
-            _LOGGER.error(f"Neovolta ModbusIOException: {exception.message}")
+            _LOGGER.debug(f"Neovolta ModbusIOException: {exception.message}")
+            self._stats["ModbusIOException"] += 1
+            self._client.close()
             return await self._get_value(address, size, unit, tries + 1)
         except Exception as exception:  # pylint: disable=broad-except
+            self._stats["Exception"] += 1
+            await self._calculate_stats()
             raise NeovoltaApiClientError(
                 "Something really wrong happened!"
             ) from exception
 
         if response.isError():
+            self._stats["isError"] += 1
             _LOGGER.debug(f"NeoVolta MODBUS response error: {response}")
             return await self._get_value(address, size, unit, tries + 1)
 
         if isinstance(response, ExceptionResponse):
+            self._stats["ExceptionResponse"] += 1
             _LOGGER.debug(f"NeoVolta device rejected MODBUS request: {response}")
             return await self._get_value(address, size, unit, tries + 1)
 
         return response.registers
+
+    async def _calculate_stats(self):
+        """Calculate stats."""
+
+        stats = (
+            f"\nNeoVolta Integration Debug STATS:\n"
+            f"async_get_data {self._stats['async_get_data']}\t"
+            f"get_value {self._stats['get_value']}\n"
+            f"TimeoutError {self._stats['TimeoutError']}\t"
+            f"ConnectionException {self._stats['ConnectionException']}\t"
+            f"ModbusIOException {self._stats['ModbusIOException']}\n"
+            f"Exception {self._stats['Exception']}\t"
+            f"isError {self._stats['isError']}\t"
+            f"ExceptionResponse {self._stats['ExceptionResponse']}\n"
+        )
+
+        tries = "tries - "
+        i = 1
+        for i in range(1, 11):
+            tries = tries + f"{i}: {self._stats['tries'][i]}\t"
+
+        stats = stats + tries
+
+        _LOGGER.debug(stats)
