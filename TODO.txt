@@ -10,3 +10,150 @@ Initialize
 
 Other
 - Define a "device"
+
+2023-03-16 23:45:22.140 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:45:22.140 WARNING (MainThread) [pymodbus.logging] Ignoring launch of delayed reconnection, another is in progress
+2023-03-16 23:45:22.258 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:45:22.259 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:51:36.297 ERROR (MainThread) [pymodbus.logging] Unable to decode response Modbus Error: Unknown response 114
+2023-03-16 23:51:36.301 ERROR (MainThread) [homeassistant] Error doing job: Fatal error: protocol.data_received() call failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/asyncio/selector_events.py", line 876, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/client/base.py", line 268, in data_received
+    self.framer.processIncomingPacket(data, self._handle_response, unit=0)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 167, in processIncomingPacket
+    self._process(callback)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 186, in _process
+    raise ModbusIOException("Unable to decode request")
+pymodbus.exceptions.ModbusIOException: Modbus Error: [Input/Output] Unable to decode request
+2023-03-16 23:51:36.304 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:51:36.308 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta connection problem
+2023-03-16 23:51:36.308 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta re-try # 2 for register 0
+2023-03-16 23:51:36.414 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:51:36.414 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:51:41.691 ERROR (MainThread) [pymodbus.logging] Unable to decode response Modbus Error: Unknown response 114
+2023-03-16 23:51:41.693 ERROR (MainThread) [homeassistant] Error doing job: Fatal error: protocol.data_received() call failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/asyncio/selector_events.py", line 876, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/client/base.py", line 268, in data_received
+    self.framer.processIncomingPacket(data, self._handle_response, unit=0)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 167, in processIncomingPacket
+    self._process(callback)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 186, in _process
+    raise ModbusIOException("Unable to decode request")
+pymodbus.exceptions.ModbusIOException: Modbus Error: [Input/Output] Unable to decode request
+2023-03-16 23:51:41.695 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:51:41.697 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta connection problem
+2023-03-16 23:51:41.697 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta re-try # 3 for register 0
+2023-03-16 23:51:41.806 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:51:41.807 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:51:47.085 ERROR (MainThread) [pymodbus.logging] Unable to decode response Modbus Error: Unknown response 114
+2023-03-16 23:51:47.087 ERROR (MainThread) [homeassistant] Error doing job: Fatal error: protocol.data_received() call failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/asyncio/selector_events.py", line 876, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/client/base.py", line 268, in data_received
+    self.framer.processIncomingPacket(data, self._handle_response, unit=0)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 167, in processIncomingPacket
+    self._process(callback)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 186, in _process
+    raise ModbusIOException("Unable to decode request")
+pymodbus.exceptions.ModbusIOException: Modbus Error: [Input/Output] Unable to decode request
+2023-03-16 23:51:47.089 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:51:47.091 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta connection problem
+2023-03-16 23:51:47.091 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta re-try # 4 for register 0
+2023-03-16 23:51:47.197 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:51:47.197 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:51:55.107 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:51:55.110 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta timeout
+2023-03-16 23:51:55.110 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta re-try # 5 for register 0
+2023-03-16 23:51:55.112 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:51:55.112 WARNING (MainThread) [pymodbus.logging] Ignoring launch of delayed reconnection, another is in progress
+2023-03-16 23:51:55.231 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:51:55.233 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:51:55.742 ERROR (MainThread) [pymodbus.logging] Unable to decode response Modbus Error: Unknown response 114
+2023-03-16 23:51:55.743 ERROR (MainThread) [homeassistant] Error doing job: Fatal error: protocol.data_received() call failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/asyncio/selector_events.py", line 876, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/client/base.py", line 268, in data_received
+    self.framer.processIncomingPacket(data, self._handle_response, unit=0)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 167, in processIncomingPacket
+    self._process(callback)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 186, in _process
+    raise ModbusIOException("Unable to decode request")
+pymodbus.exceptions.ModbusIOException: Modbus Error: [Input/Output] Unable to decode request
+2023-03-16 23:51:55.746 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:51:55.863 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:51:55.864 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:52:03.129 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:52:03.131 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta timeout
+2023-03-16 23:52:03.132 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta re-try # 6 for register 0
+2023-03-16 23:52:03.134 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:52:03.134 WARNING (MainThread) [pymodbus.logging] Ignoring launch of delayed reconnection, another is in progress
+2023-03-16 23:52:03.249 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:52:03.251 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:52:11.152 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:52:11.154 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta timeout
+2023-03-16 23:52:11.155 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta re-try # 7 for register 0
+2023-03-16 23:52:11.156 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:52:11.156 WARNING (MainThread) [pymodbus.logging] Ignoring launch of delayed reconnection, another is in progress
+2023-03-16 23:52:11.277 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:52:11.278 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:52:16.553 ERROR (MainThread) [pymodbus.logging] Unable to decode response Modbus Error: Unknown response 114
+2023-03-16 23:52:16.556 ERROR (MainThread) [homeassistant] Error doing job: Fatal error: protocol.data_received() call failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/asyncio/selector_events.py", line 876, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/client/base.py", line 268, in data_received
+    self.framer.processIncomingPacket(data, self._handle_response, unit=0)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 167, in processIncomingPacket
+    self._process(callback)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 186, in _process
+    raise ModbusIOException("Unable to decode request")
+pymodbus.exceptions.ModbusIOException: Modbus Error: [Input/Output] Unable to decode request
+2023-03-16 23:52:16.558 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:52:16.561 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta connection problem
+2023-03-16 23:52:16.561 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta re-try # 8 for register 0
+2023-03-16 23:52:16.677 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:52:16.678 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:52:22.902 ERROR (MainThread) [pymodbus.logging] Unable to decode response Modbus Error: Unknown response 114
+2023-03-16 23:52:22.903 ERROR (MainThread) [homeassistant] Error doing job: Fatal error: protocol.data_received() call failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/asyncio/selector_events.py", line 876, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/client/base.py", line 268, in data_received
+    self.framer.processIncomingPacket(data, self._handle_response, unit=0)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 167, in processIncomingPacket
+    self._process(callback)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 186, in _process
+    raise ModbusIOException("Unable to decode request")
+pymodbus.exceptions.ModbusIOException: Modbus Error: [Input/Output] Unable to decode request
+2023-03-16 23:52:22.904 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:52:22.905 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta connection problem
+2023-03-16 23:52:22.905 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta re-try # 9 for register 0
+2023-03-16 23:52:23.016 INFO (MainThread) [pymodbus.logging] Protocol made connection.
+2023-03-16 23:52:23.017 INFO (MainThread) [pymodbus.logging] Connected to 192.168.1.205:8899.
+2023-03-16 23:52:28.317 ERROR (MainThread) [pymodbus.logging] Unable to decode response Modbus Error: Unknown response 114
+2023-03-16 23:52:28.320 ERROR (MainThread) [homeassistant] Error doing job: Fatal error: protocol.data_received() call failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/asyncio/selector_events.py", line 876, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/client/base.py", line 268, in data_received
+    self.framer.processIncomingPacket(data, self._handle_response, unit=0)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 167, in processIncomingPacket
+    self._process(callback)
+  File "/home/vscode/.local/lib/python3.10/site-packages/pymodbus/framer/socket_framer.py", line 186, in _process
+    raise ModbusIOException("Unable to decode request")
+pymodbus.exceptions.ModbusIOException: Modbus Error: [Input/Output] Unable to decode request
+2023-03-16 23:52:28.322 INFO (MainThread) [pymodbus.logging] Protocol lost connection.
+2023-03-16 23:52:28.324 DEBUG (MainThread) [custom_components.neovolta.api] Neovolta connection problem
+2023-03-16 23:52:28.325 DEBUG (MainThread) [custom_components.neovolta.api]
+NeoVolta Integration Debug STATS:
+async_get_data 379      get_value 3542
+TimeoutError 806        ConnectionException 2276        ModbusIOException 0
+Exception 0     isError 0       ExceptionResponse 0
+tries - 1: 460  2: 355  3: 345  4: 342  5: 340  6: 340  7: 340  8: 340  9: 340  10: 340
+2023-03-16 23:52:28.325 DEBUG (MainThread) [custom_components.neovolta] Finished fetching neovolta data in 52.476 seconds (success: False)
