@@ -1,0 +1,19 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Se tiver deficuldades verifique o site: https://github.com/austinmroczek/neovolta",
+                "data": {
+                    "host": "Endereço",
+                    "port": "Porta"
+                }
+            }
+        },
+        "error": {
+            "auth": "Nome de Utilizador ou password errada.",
+            "connection": "Erro de ligação.",
+            "unknown": "Erro desconhecido.",
+            "address": "Endereço de ip incorrecto."
+        }
+    }
+}
