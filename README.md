@@ -1,3 +1,7 @@
+# WARNING
+[!CAUTION]
+The NeoVolta custom integration for HACS is broken and not maintained. Instead use the [SolarMan MQTT Add-on](https://github.com/austinmroczek/addon-solarman-mqtt).  
+
 # NeoVolta
 
 [![GitHub Release][releases-shield]][releases]
